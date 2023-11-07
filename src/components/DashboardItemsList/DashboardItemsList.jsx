@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import DashboardItemCard from "../DashboardItemCard/DashboardItemCard";
-import { fetchListOfDashboards } from "../../network/apiHandlers";
+import { getAllDashboards } from "./../../utils/functions";
 
 const DashboardItemsList = ({
   setCurrentExpandedCard,
@@ -10,23 +10,11 @@ const DashboardItemsList = ({
 }) => {
   const [dashboards, setDashboards] = useState([]);
 
-  const getAllDashboards = async () => {
-    try {
-      const response = await fetchListOfDashboards();
-      if (response.data.dashboards.length > 0) {
-        setDashboards(response.data.dashboards);
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
   useEffect(() => {
-    try {
-      getAllDashboards();
-    } catch (error) {
-      console.log(error);
-    }
+    (async () => {
+      const allDashboards = await getAllDashboards();
+      setDashboards(allDashboards);
+    })();
   }, []);
 
   return (

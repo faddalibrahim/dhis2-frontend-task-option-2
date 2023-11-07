@@ -1,6 +1,11 @@
-/* eslint-disable react/prop-types */
+// librairies import
+import { useState } from "react";
 
+// components
 import { Caret, Star, StarYellow } from "../../assets/icons/Icons";
+
+// functions
+import { getSingleDashboardDetails } from "../../utils/functions";
 
 const DashboardItemCard = ({
   displayName,
@@ -9,12 +14,17 @@ const DashboardItemCard = ({
   currentExpandedCard,
   setCurrentExpandedCard,
 }) => {
-  const handleCardExpansion = () => {
-    if (currentExpandedCard === id) {
-      setCurrentExpandedCard(null);
-      return;
+  const [dashboardDetails, setDashboardDetails] = useState(null);
+  const handleCardExpansion = async () => {
+    // fetch data, if not available
+    if (!dashboardDetails) {
+      const details = await getSingleDashboardDetails(id);
+      setDashboardDetails(details);
     }
-    setCurrentExpandedCard(id);
+    // toggle dashboard expansion
+    currentExpandedCard === id
+      ? setCurrentExpandedCard(null)
+      : setCurrentExpandedCard(id);
   };
 
   return (
