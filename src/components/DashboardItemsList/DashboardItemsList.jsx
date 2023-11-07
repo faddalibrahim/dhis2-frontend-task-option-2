@@ -1,6 +1,13 @@
+/* eslint-disable react/prop-types */
+
 import DashboardItemCard from "../DashboardItemCard/DashboardItemCard";
 
-const DashboardItemsList = () => {
+const DashboardItemsList = ({
+  setCurrentExpandedCard,
+  currentExpandedCard,
+  filterBy,
+  setFilterBy,
+}) => {
   const dashboards = [
     {
       displayName: "Antenatal Care",
@@ -31,8 +38,25 @@ const DashboardItemsList = () => {
 
   return (
     <div className="w-[40vw] mx-auto flex flex-col gap-8 py-8">
+      {/* {dashboards.map(
+        (dashboard) =>
+          dashboard.displayName.toLowerCase() === filterBy && (
+            <DashboardItemCard
+              {...dashboard}
+              key={dashboard.id}
+              currentExpandedCard={currentExpandedCard}
+              setCurrentExpandedCard={setCurrentExpandedCard}
+            />
+          )
+      )} */}
+
       {dashboards.map((dashboard) => (
-        <DashboardItemCard {...dashboard} key={dashboard.id} />
+        <DashboardItemCard
+          {...dashboard}
+          key={dashboard.id}
+          currentExpandedCard={currentExpandedCard}
+          setCurrentExpandedCard={setCurrentExpandedCard}
+        />
       ))}
     </div>
   );
