@@ -9,11 +9,11 @@ import {
   TextIcon,
   VisualizationIcon,
 } from "../../assets/icons/Icons";
+import { MessagesIcon } from "./../../assets/icons/Icons";
+import { LocationIcon } from "./../../assets/icons/Icons";
 
 // functions
 import { getSingleDashboardDetails } from "../../utils/functions";
-import { MessagesIcon } from "./../../assets/icons/Icons";
-import { LocationIcon } from "./../../assets/icons/Icons";
 
 const DashboardItemCard = ({
   displayName,
@@ -21,6 +21,7 @@ const DashboardItemCard = ({
   id,
   currentExpandedCard,
   setCurrentExpandedCard,
+  filterBy,
 }) => {
   const [dashboardDetails, setDashboardDetails] = useState(null);
   const [isStarred, setIsStarred] = useState(starred);
@@ -113,7 +114,7 @@ const DashboardItemCard = ({
               className="flex items-center gap-3 hover:bg-[#222] text-white px-3 py-5 rounded"
             >
               {dashboardTypeIcon[dashboardItem.type]}
-              <p className={`${bg}`}>
+              <p>
                 {dashboardItem.text ??
                   dashboardItem[dashboardItem.type.toLowerCase()].name ??
                   "Messages"}

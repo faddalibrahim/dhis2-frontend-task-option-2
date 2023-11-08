@@ -7,6 +7,7 @@ import { getAllDashboards } from "./../../utils/functions";
 const DashboardItemsList = ({
   setCurrentExpandedCard,
   currentExpandedCard,
+  filterBy,
 }) => {
   const [dashboards, setDashboards] = useState([]);
 
@@ -26,6 +27,7 @@ const DashboardItemsList = ({
             key={dashboard.id}
             currentExpandedCard={currentExpandedCard}
             setCurrentExpandedCard={setCurrentExpandedCard}
+            filterBy={filterBy}
           />
         ))}
       </div>
