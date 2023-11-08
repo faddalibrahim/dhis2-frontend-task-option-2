@@ -18,15 +18,17 @@ const DashboardItemsList = ({
   }, []);
 
   return (
-    <div className="w-[40vw] mx-auto flex flex-col gap-8 py-8">
-      {dashboards.map((dashboard) => (
-        <DashboardItemCard
-          {...dashboard}
-          key={dashboard.id}
-          currentExpandedCard={currentExpandedCard}
-          setCurrentExpandedCard={setCurrentExpandedCard}
-        />
-      ))}
+    <div className="grow overflow-y-auto">
+      <div className="w-[40vw] mx-auto flex flex-col gap-8 py-8 ">
+        {dashboards.map((dashboard) => (
+          <DashboardItemCard
+            {...dashboard}
+            key={dashboard.id}
+            currentExpandedCard={currentExpandedCard}
+            setCurrentExpandedCard={setCurrentExpandedCard}
+          />
+        ))}
+      </div>
     </div>
   );
 };

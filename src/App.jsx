@@ -7,7 +7,7 @@ function App() {
   const [filterBy, setFilterBy] = useState("All Dashboards");
 
   return (
-    <main className="bg-[#222] w-screen h-screen">
+    <main className="bg-[#222] w-screen h-screen flex flex-col justify-between">
       <Appbar filterBy={filterBy} setFilterBy={setFilterBy} />
       <DashboardItemsList
         currentExpandedCard={currentExpandedCard}

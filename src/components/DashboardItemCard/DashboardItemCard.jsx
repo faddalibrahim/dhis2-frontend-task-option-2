@@ -84,9 +84,9 @@ const DashboardItemCard = ({
         </div>
       </div>
       {currentExpandedCard === id && (
-        <div className="bg-[#333] px-5 py-2 text-[#aaa] flex flex-col gap-3">
+        <div className="bg-[#333] px-5 py-4 text-[#aaa] flex flex-col gap-5">
           {dashboardDetails?.dashboardItems?.map((dashboardItem) => (
-            <div key={dashboardItem.id} className="flex gap-2">
+            <div key={dashboardItem.id} className="flex gap-3">
               <StarYellow />
               <p>{dashboardItem.id}</p>
             </div>
