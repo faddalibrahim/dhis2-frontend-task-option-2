@@ -66,7 +66,7 @@ const DashboardItemCard = ({
   return (
     <div className="flex flex-col">
       <div
-        className="flex justify-between px-5 py-8 bg-[#333] items-center cursor-pointer rounded"
+        className="flex justify-between px-5 py-8 bg-[#333] items-center cursor-pointer"
         onClick={handleCardExpansion}
       >
         <h1 className="text-lg text-[#aaa] font-medium">{displayName}</h1>
@@ -83,7 +83,16 @@ const DashboardItemCard = ({
           )}
         </div>
       </div>
-      {currentExpandedCard === id && <div>content</div>}
+      {currentExpandedCard === id && (
+        <div className="bg-[#333] px-5 py-2 text-[#aaa] flex flex-col gap-3">
+          {dashboardDetails?.dashboardItems?.map((dashboardItem) => (
+            <div key={dashboardItem.id} className="flex gap-2">
+              <StarYellow />
+              <p>{dashboardItem.id}</p>
+            </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 };
