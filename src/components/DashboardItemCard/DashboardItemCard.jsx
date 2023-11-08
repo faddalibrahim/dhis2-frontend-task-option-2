@@ -71,6 +71,20 @@ const DashboardItemCard = ({
     setIsStarred(starredDashboards.includes(id));
   }, [id]);
 
+  const dashboardTypeIcon = {
+    MAP: <LocationIcon />,
+    TEXT: <TextIcon />,
+    MESSAGES: <MessagesIcon />,
+    VISUALIZATION: <VisualizationIcon />,
+  };
+
+  //   const dashboardTypeColor = {
+  //     MAP: "#d99bff",
+  //     TEXT: "#ff9a62",
+  //     MESSAGES: "#ff9a62",
+  //     VISUALIZATION: "#ff9a62",
+  //   };
+
   return (
     <div className="flex flex-col">
       <div
@@ -82,30 +96,28 @@ const DashboardItemCard = ({
           <div onClick={handleDashboardStar} className="hover:animate-bounce">
             {isStarred ? <StarYellow /> : <Star />}
           </div>
-          {currentExpandedCard === id ? (
-            <div className="rotate-180">
-              <Caret />
-            </div>
-          ) : (
+          <div className={`${currentExpandedCard === id ? "rotate-180" : ""}`}>
             <Caret />
-          )}
+          </div>
         </div>
       </div>
       {currentExpandedCard === id && (
-        <div className="bg-[#333] px-5 py-4 text-[#aaa] flex flex-col gap-5">
+        <div
+          className={`px-5 py-4 text-[#aaa] flex flex-col cursor-pointer h-[15rem] overflow-y-auto ${
+            currentExpandedCard === id ? "bg-[#1e1e1e]" : "bg-[#333]"
+          }`}
+        >
           {dashboardDetails?.dashboardItems?.map((dashboardItem) => (
-            <div key={dashboardItem.id} className="flex gap-3">
-              {dashboardItem.type === "MAP" ? (
-                <LocationIcon />
-              ) : dashboardItem.type === "TEXT" ? (
-                <TextIcon />
-              ) : dashboardItem.type === "MESSAGES" ? (
-                <MessagesIcon />
-              ) : (
-                <VisualizationIcon />
-              )}
-
-              <p>{dashboardItem.id}</p>
+            <div
+              key={dashboardItem.id}
+              className="flex items-center gap-3 hover:bg-[#222] text-white px-3 py-5 rounded"
+            >
+              {dashboardTypeIcon[dashboardItem.type]}
+              <p className={`${bg}`}>
+                {dashboardItem.text ??
+                  dashboardItem[dashboardItem.type.toLowerCase()].name ??
+                  "Messages"}
+              </p>
             </div>
           ))}
         </div>
