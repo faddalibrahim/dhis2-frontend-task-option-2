@@ -2,10 +2,18 @@
 import { useEffect, useState } from "react";
 
 // components
-import { Caret, Star, StarYellow } from "../../assets/icons/Icons";
+import {
+  Caret,
+  Star,
+  StarYellow,
+  TextIcon,
+  VisualizationIcon,
+} from "../../assets/icons/Icons";
 
 // functions
 import { getSingleDashboardDetails } from "../../utils/functions";
+import { MessagesIcon } from "./../../assets/icons/Icons";
+import { LocationIcon } from "./../../assets/icons/Icons";
 
 const DashboardItemCard = ({
   displayName,
@@ -87,7 +95,16 @@ const DashboardItemCard = ({
         <div className="bg-[#333] px-5 py-4 text-[#aaa] flex flex-col gap-5">
           {dashboardDetails?.dashboardItems?.map((dashboardItem) => (
             <div key={dashboardItem.id} className="flex gap-3">
-              <StarYellow />
+              {dashboardItem.type === "MAP" ? (
+                <LocationIcon />
+              ) : dashboardItem.type === "TEXT" ? (
+                <TextIcon />
+              ) : dashboardItem.type === "MESSAGES" ? (
+                <MessagesIcon />
+              ) : (
+                <VisualizationIcon />
+              )}
+
               <p>{dashboardItem.id}</p>
             </div>
           ))}
