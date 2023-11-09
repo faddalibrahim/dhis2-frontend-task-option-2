@@ -13,6 +13,7 @@ const DashboardCardList = ({
   const [dashboards, setDashboards] = useState([]);
 
   useEffect(() => {
+    // fetch all dashboards
     (async () => {
       const allDashboards = await getAllDashboards();
       setDashboards(allDashboards);

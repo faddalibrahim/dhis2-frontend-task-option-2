@@ -46,17 +46,11 @@ const DashboardItemCard = ({
       setDashboardDetails(details);
       setFiltered(
         details?.dashboardItems?.filter((dashboardItem) => {
-          // return dashboardItem.type.toLowerCase() === filterBy.toLowerCase();
-
           if (filterBy == "all") {
             return true;
           } else {
             return dashboardItem.type.toLowerCase() === filterBy.toLowerCase();
           }
-
-          // return filterBy === ""
-          //   ? dashboardItem
-          //   : dashboardItem.type.toLowerCase() === filterBy.toLowerCase();
         }) ?? []
       );
     }
