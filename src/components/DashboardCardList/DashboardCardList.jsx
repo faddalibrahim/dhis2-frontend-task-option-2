@@ -6,7 +6,10 @@ import DashboardCard from "../DashboardCard/DashboardCard";
 import ShimmerGroup from "../Shimmer/ShimmerGroup";
 
 // functions
-import { getAllDashboards } from "../../utils/functions";
+import {
+  getAllDashboards,
+  getSingleDashboardDetails,
+} from "../../utils/functions";
 
 export default function DashboardCardList({
   setCurrentExpandedCard,
@@ -16,11 +19,17 @@ export default function DashboardCardList({
   const [dashboards, setDashboards] = useState([]);
 
   useEffect(() => {
-    // fetch all dashboards
     (async () => {
+      // fetch all dashboards
       const allDashboardsResponse = await getAllDashboards();
       console.log(allDashboardsResponse);
       setDashboards(allDashboardsResponse);
+
+      // // fetch first dashboard data
+      // const firstDashboardDetails = await getSingleDashboardDetails(
+      //   allDashboardsResponse[0]?.id
+      // );
+      // console.log("ffff", firstDashboardDetails);
     })();
   }, []);
 

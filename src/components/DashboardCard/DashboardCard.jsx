@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 
 // components
 import { Caret, StarGray, StarYellow } from "../../assets/icons/Icons";
+import ShimmerGroup from "../Shimmer/ShimmerGroup";
 
 // functions
 import {
@@ -10,14 +11,12 @@ import {
   getStarredDashboards,
   updateStarredDashboards,
 } from "../../utils/functions";
-import ShimmerGroup from "../Shimmer/ShimmerGroup";
 
 // constants
 import { DASHBOARD_ITEM_TYPE_ICON } from "../../utils/constants";
 
 const DashboardItemCard = ({
   displayName,
-  starred,
   id,
   currentExpandedCard,
   setCurrentExpandedCard,
@@ -26,7 +25,10 @@ const DashboardItemCard = ({
 }) => {
   const [dashboardDetails, setDashboardDetails] = useState(null);
   const [filtered, setFiltered] = useState(null);
-  const [isStarred, setIsStarred] = useState(starred);
+  // const [isStarred, setIsStarred] = useState(starred);
+  const [isStarred, setIsStarred] = useState(
+    getStarredDashboards().includes(id)
+  );
 
   const handleCardExpansionToggle = async () => {
     // toggle dashboard expansion
@@ -50,8 +52,6 @@ const DashboardItemCard = ({
     }
   };
 
-  console.log(filterBy);
-
   const handleDashboardStar = async (event) => {
     event.stopPropagation();
 
@@ -71,13 +71,7 @@ const DashboardItemCard = ({
   };
 
   useEffect(() => {
-    console.log("hello");
-    const STARRED_DASHBOARDS =
-      JSON.parse(localStorage.getItem("starredDashboards")) ?? [];
-    setIsStarred(STARRED_DASHBOARDS.includes(id));
-  }, [id]);
-
-  useEffect(() => {
+    console.log("loading first dashboard data");
     // get first dashboard card's details on load
     if (index === 0) {
       (async () => {
@@ -90,6 +84,7 @@ const DashboardItemCard = ({
   }, [index, setCurrentExpandedCard, id]);
 
   useEffect(() => {
+    console.log("filtering dashboard in use effect");
     setFiltered(
       dashboardDetails?.dashboardItems?.filter((dashboardItem) => {
         if (filterBy == "all") {
