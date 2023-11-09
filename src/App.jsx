@@ -1,5 +1,5 @@
 import Appbar from "./components/Appbar/Appbar";
-import DashboardItemsList from "./components/DashboardItemsList/DashboardItemsList";
+import DashboardCardList from "./components/DashboardCardList/DashboardCardList";
 import { useState } from "react";
 
 function App() {
@@ -9,7 +9,7 @@ function App() {
   return (
     <main className="bg-[#222] w-screen h-screen flex flex-col justify-between">
       <Appbar filterBy={filterBy} setFilterBy={setFilterBy} />
-      <DashboardItemsList
+      <DashboardCardList
         currentExpandedCard={currentExpandedCard}
         setCurrentExpandedCard={setCurrentExpandedCard}
         filterBy={filterBy}

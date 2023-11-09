@@ -9,11 +9,12 @@ import {
   TextIcon,
   VisualizationIcon,
 } from "../../assets/icons/Icons";
-import { MessagesIcon } from "./../../assets/icons/Icons";
-import { LocationIcon } from "./../../assets/icons/Icons";
+import { MessagesIcon } from "../../assets/icons/Icons";
+import { LocationIcon } from "../../assets/icons/Icons";
 
 // functions
 import { getSingleDashboardDetails } from "../../utils/functions";
+import ShimmerGroup from "../Shimmer/ShimmerGroup";
 
 const DashboardItemCard = ({
   displayName,
@@ -26,15 +27,16 @@ const DashboardItemCard = ({
   const [dashboardDetails, setDashboardDetails] = useState(null);
   const [isStarred, setIsStarred] = useState(starred);
   const handleCardExpansion = async () => {
+    // toggle dashboard expansion
+    currentExpandedCard === id
+      ? setCurrentExpandedCard(null)
+      : setCurrentExpandedCard(id);
+
     // fetch data, if not available
     if (!dashboardDetails) {
       const details = await getSingleDashboardDetails(id);
       setDashboardDetails(details);
     }
-    // toggle dashboard expansion
-    currentExpandedCard === id
-      ? setCurrentExpandedCard(null)
-      : setCurrentExpandedCard(id);
   };
 
   const handleDashboardStar = async (event) => {
@@ -79,13 +81,6 @@ const DashboardItemCard = ({
     VISUALIZATION: <VisualizationIcon />,
   };
 
-  //   const dashboardTypeColor = {
-  //     MAP: "#d99bff",
-  //     TEXT: "#ff9a62",
-  //     MESSAGES: "#ff9a62",
-  //     VISUALIZATION: "#ff9a62",
-  //   };
-
   return (
     <div className="flex flex-col">
       <div
@@ -108,19 +103,23 @@ const DashboardItemCard = ({
             currentExpandedCard === id ? "bg-[#1e1e1e]" : "bg-[#333]"
           }`}
         >
-          {dashboardDetails?.dashboardItems?.map((dashboardItem) => (
-            <div
-              key={dashboardItem.id}
-              className="flex items-center gap-3 hover:bg-[#222] text-white px-3 py-5 rounded"
-            >
-              {dashboardTypeIcon[dashboardItem.type]}
-              <p>
-                {dashboardItem.text ??
-                  dashboardItem[dashboardItem.type.toLowerCase()].name ??
-                  "Messages"}
-              </p>
-            </div>
-          ))}
+          {dashboardDetails?.dashboardItems?.length > 0 ? (
+            dashboardDetails?.dashboardItems?.map((dashboardItem) => (
+              <div
+                key={dashboardItem.id}
+                className="flex items-center gap-3 hover:bg-[#222] text-white px-3 py-5 rounded"
+              >
+                {dashboardTypeIcon[dashboardItem.type]}
+                <p>
+                  {dashboardItem.text ??
+                    dashboardItem[dashboardItem.type.toLowerCase()].name ??
+                    "Messages"}
+                </p>
+              </div>
+            ))
+          ) : (
+            <ShimmerGroup count={3} />
+          )}
         </div>
       )}
     </div>
