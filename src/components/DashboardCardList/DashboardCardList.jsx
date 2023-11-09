@@ -21,15 +21,16 @@ const DashboardCardList = ({
 
   return (
     <div className="grow overflow-y-auto">
-      <div className="w-[40vw] mx-auto flex flex-col gap-8 py-8 ">
+      <div className="w-[90vw] md:w-[40vw] mx-auto flex flex-col gap-8 py-8 ">
         {dashboards.length > 0 ? (
-          dashboards.map((dashboard) => (
+          dashboards.map((dashboard, index) => (
             <DashboardCard
               {...dashboard}
               key={dashboard.id}
               currentExpandedCard={currentExpandedCard}
               setCurrentExpandedCard={setCurrentExpandedCard}
               filterBy={filterBy}
+              index={index}
             />
           ))
         ) : (

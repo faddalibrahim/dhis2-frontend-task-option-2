@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 // components
 import {
   Caret,
-  Star,
+  StarGray,
   StarYellow,
   TextIcon,
   VisualizationIcon,
@@ -23,6 +23,7 @@ const DashboardItemCard = ({
   currentExpandedCard,
   setCurrentExpandedCard,
   filterBy,
+  index,
 }) => {
   const [dashboardDetails, setDashboardDetails] = useState(null);
   const [isStarred, setIsStarred] = useState(starred);
@@ -99,6 +100,18 @@ const DashboardItemCard = ({
   }, [id]);
 
   useEffect(() => {
+    // get first card's details
+    if (index === 0) {
+      (async () => {
+        const details = await getSingleDashboardDetails(id);
+        setDashboardDetails(details);
+
+        setCurrentExpandedCard(id);
+      })();
+    }
+  }, [index, setCurrentExpandedCard, id]);
+
+  useEffect(() => {
     setFiltered(
       dashboardDetails?.dashboardItems?.filter((dashboardItem) => {
         if (filterBy == "all") {
@@ -128,7 +141,7 @@ const DashboardItemCard = ({
         <h1 className="text-lg text-[#aaa] font-medium">{displayName}</h1>
         <div className="flex items-center gap-4 hover:animate-pulse">
           <div onClick={handleDashboardStar} className="hover:animate-bounce">
-            {isStarred ? <StarYellow /> : <Star />}
+            {isStarred ? <StarYellow /> : <StarGray />}
           </div>
           <div className={`${currentExpandedCard === id ? "rotate-180" : ""}`}>
             <Caret />
