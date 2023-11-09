@@ -33,3 +33,14 @@ export const getSingleDashboardDetails = async (dashboardId) => {
     console.log(error);
   }
 };
+
+export const getStarredDashboards = () => {
+  return JSON.parse(localStorage.getItem("starredDashboards")) ?? [];
+};
+
+export const updateStarredDashboards = (newStarredDashboards) => {
+  localStorage.setItem(
+    "starredDashboards",
+    JSON.stringify(newStarredDashboards)
+  );
+};

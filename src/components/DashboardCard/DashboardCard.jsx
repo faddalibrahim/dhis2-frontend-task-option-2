@@ -2,19 +2,18 @@
 import { useEffect, useState } from "react";
 
 // components
-import {
-  Caret,
-  StarGray,
-  StarYellow,
-  TextIcon,
-  VisualizationIcon,
-} from "../../assets/icons/Icons";
-import { MessagesIcon } from "../../assets/icons/Icons";
-import { LocationIcon } from "../../assets/icons/Icons";
+import { Caret, StarGray, StarYellow } from "../../assets/icons/Icons";
 
 // functions
-import { getSingleDashboardDetails } from "../../utils/functions";
+import {
+  getSingleDashboardDetails,
+  getStarredDashboards,
+  updateStarredDashboards,
+} from "../../utils/functions";
 import ShimmerGroup from "../Shimmer/ShimmerGroup";
+
+// constants
+import { DASHBOARD_ITEM_TYPE_ICON } from "../../utils/constants";
 
 const DashboardItemCard = ({
   displayName,
@@ -26,21 +25,16 @@ const DashboardItemCard = ({
   index,
 }) => {
   const [dashboardDetails, setDashboardDetails] = useState(null);
+  const [filtered, setFiltered] = useState(null);
   const [isStarred, setIsStarred] = useState(starred);
-  const [filtered, setFiltered] = useState(
-    dashboardDetails?.dashboardItems?.filter(
-      (dashboardItem) =>
-        dashboardItem.type.toLowerCase() === filterBy.toLowerCase()
-    ) ?? []
-  );
 
-  const handleCardExpansion = async () => {
+  const handleCardExpansionToggle = async () => {
     // toggle dashboard expansion
     currentExpandedCard === id
       ? setCurrentExpandedCard(null)
       : setCurrentExpandedCard(id);
 
-    // fetch data, if not available
+    // fetch data for this dashboard if not available
     if (!dashboardDetails) {
       const details = await getSingleDashboardDetails(id);
       setDashboardDetails(details);
@@ -60,27 +54,17 @@ const DashboardItemCard = ({
 
   const handleDashboardStar = async (event) => {
     event.stopPropagation();
-    saveStarState(id);
-  };
 
-  const saveStarState = (id) => {
-    const starredDashboards =
-      JSON.parse(localStorage.getItem("starredDashboards")) ?? [];
+    const STARRED_DASHBOARDS = getStarredDashboards();
 
     if (isStarred) {
-      // remove item from starredDashboards
-      const index = starredDashboards.indexOf(id);
-      starredDashboards.splice(index, 1);
+      const index = STARRED_DASHBOARDS.indexOf(id);
+      STARRED_DASHBOARDS.splice(index, 1);
     } else {
-      // add item to starredDashboards
-      starredDashboards.push(id);
+      STARRED_DASHBOARDS.push(id);
     }
 
-    // save to localstorage
-    localStorage.setItem(
-      "starredDashboards",
-      JSON.stringify(starredDashboards)
-    );
+    updateStarredDashboards(STARRED_DASHBOARDS);
 
     // update starred state
     setIsStarred(!isStarred);
@@ -88,13 +72,13 @@ const DashboardItemCard = ({
 
   useEffect(() => {
     console.log("hello");
-    const starredDashboards =
+    const STARRED_DASHBOARDS =
       JSON.parse(localStorage.getItem("starredDashboards")) ?? [];
-    setIsStarred(starredDashboards.includes(id));
+    setIsStarred(STARRED_DASHBOARDS.includes(id));
   }, [id]);
 
   useEffect(() => {
-    // get first card's details
+    // get first dashboard card's details on load
     if (index === 0) {
       (async () => {
         const details = await getSingleDashboardDetails(id);
@@ -117,20 +101,13 @@ const DashboardItemCard = ({
     );
   }, [filterBy, dashboardDetails]);
 
-  const dashboardTypeIcon = {
-    MAP: <LocationIcon />,
-    TEXT: <TextIcon />,
-    MESSAGES: <MessagesIcon />,
-    VISUALIZATION: <VisualizationIcon />,
-  };
-
   // console.log(filterBy);
 
   return (
     <div className="flex flex-col">
       <div
         className="flex justify-between px-5 py-8 bg-[#333] items-center cursor-pointer"
-        onClick={handleCardExpansion}
+        onClick={handleCardExpansionToggle}
       >
         <h1 className="text-lg text-[#aaa] font-medium">{displayName}</h1>
         <div className="flex items-center gap-4 hover:animate-pulse">
@@ -156,7 +133,7 @@ const DashboardItemCard = ({
                 key={dashboardItem.id}
                 className="flex items-center gap-3 hover:bg-[#222] text-white px-3 py-5 rounded"
               >
-                {dashboardTypeIcon[dashboardItem.type]}
+                {DASHBOARD_ITEM_TYPE_ICON[dashboardItem.type]}
                 <p>
                   {dashboardItem.text ??
                     dashboardItem[dashboardItem.type.toLowerCase()].name ??
