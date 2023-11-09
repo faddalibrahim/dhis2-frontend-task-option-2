@@ -5,10 +5,14 @@ import {
 
 export const getAllDashboards = async () => {
   try {
-    const response = await fetchListOfDashboards();
-    if (response.data.dashboards.length > 0) {
-      return response.data.dashboards;
+    const DASHBOARD_LIST_RESPONSE = await fetchListOfDashboards();
+    console.log(DASHBOARD_LIST_RESPONSE);
+
+    if (DASHBOARD_LIST_RESPONSE.status === 200) {
+      return DASHBOARD_LIST_RESPONSE.data.dashboards;
     }
+
+    return [];
   } catch (error) {
     console.log(error);
   }
@@ -16,11 +20,15 @@ export const getAllDashboards = async () => {
 
 export const getSingleDashboardDetails = async (dashboardId) => {
   try {
-    const response = await fetchSingleDashboardDetails(dashboardId);
-    if (response.data) {
-      console.log(response.data);
-      return response.data;
+    const SINGLE_DASHBOARD_RESPONSE = await fetchSingleDashboardDetails(
+      dashboardId
+    );
+
+    if (SINGLE_DASHBOARD_RESPONSE.status === 200) {
+      return SINGLE_DASHBOARD_RESPONSE.data;
     }
+
+    return {};
   } catch (error) {
     console.log(error);
   }

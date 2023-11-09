@@ -1,22 +1,26 @@
-/* eslint-disable react/prop-types */
-
+// lib imports
 import { useEffect, useState } from "react";
+
+// components
 import DashboardCard from "../DashboardCard/DashboardCard";
-import { getAllDashboards } from "../../utils/functions";
 import ShimmerGroup from "../Shimmer/ShimmerGroup";
 
-const DashboardCardList = ({
+// functions
+import { getAllDashboards } from "../../utils/functions";
+
+export default function DashboardCardList({
   setCurrentExpandedCard,
   currentExpandedCard,
   filterBy,
-}) => {
+}) {
   const [dashboards, setDashboards] = useState([]);
 
   useEffect(() => {
     // fetch all dashboards
     (async () => {
-      const allDashboards = await getAllDashboards();
-      setDashboards(allDashboards);
+      const allDashboardsResponse = await getAllDashboards();
+      console.log(allDashboardsResponse);
+      setDashboards(allDashboardsResponse);
     })();
   }, []);
 
@@ -40,6 +44,4 @@ const DashboardCardList = ({
       </div>
     </div>
   );
-};
-
-export default DashboardCardList;
+}
