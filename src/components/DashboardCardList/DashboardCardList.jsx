@@ -3,7 +3,6 @@
 import { useEffect, useState } from "react";
 import DashboardCard from "../DashboardCard/DashboardCard";
 import { getAllDashboards } from "../../utils/functions";
-import Shimmer from "../Shimmer/Shimmer";
 import ShimmerGroup from "../Shimmer/ShimmerGroup";
 
 const DashboardCardList = ({

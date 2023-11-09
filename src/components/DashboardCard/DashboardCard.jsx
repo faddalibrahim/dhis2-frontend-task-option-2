@@ -26,6 +26,13 @@ const DashboardItemCard = ({
 }) => {
   const [dashboardDetails, setDashboardDetails] = useState(null);
   const [isStarred, setIsStarred] = useState(starred);
+  const [filtered, setFiltered] = useState(
+    dashboardDetails?.dashboardItems?.filter(
+      (dashboardItem) =>
+        dashboardItem.type.toLowerCase() === filterBy.toLowerCase()
+    ) ?? []
+  );
+
   const handleCardExpansion = async () => {
     // toggle dashboard expansion
     currentExpandedCard === id
@@ -36,8 +43,25 @@ const DashboardItemCard = ({
     if (!dashboardDetails) {
       const details = await getSingleDashboardDetails(id);
       setDashboardDetails(details);
+      setFiltered(
+        details?.dashboardItems?.filter((dashboardItem) => {
+          // return dashboardItem.type.toLowerCase() === filterBy.toLowerCase();
+
+          if (filterBy == "all") {
+            return true;
+          } else {
+            return dashboardItem.type.toLowerCase() === filterBy.toLowerCase();
+          }
+
+          // return filterBy === ""
+          //   ? dashboardItem
+          //   : dashboardItem.type.toLowerCase() === filterBy.toLowerCase();
+        }) ?? []
+      );
     }
   };
+
+  console.log(filterBy);
 
   const handleDashboardStar = async (event) => {
     event.stopPropagation();
@@ -74,12 +98,26 @@ const DashboardItemCard = ({
     setIsStarred(starredDashboards.includes(id));
   }, [id]);
 
+  useEffect(() => {
+    setFiltered(
+      dashboardDetails?.dashboardItems?.filter((dashboardItem) => {
+        if (filterBy == "all") {
+          return true;
+        } else {
+          return dashboardItem.type.toLowerCase() === filterBy.toLowerCase();
+        }
+      }) ?? []
+    );
+  }, [filterBy, dashboardDetails]);
+
   const dashboardTypeIcon = {
     MAP: <LocationIcon />,
     TEXT: <TextIcon />,
     MESSAGES: <MessagesIcon />,
     VISUALIZATION: <VisualizationIcon />,
   };
+
+  // console.log(filterBy);
 
   return (
     <div className="flex flex-col">
@@ -103,8 +141,10 @@ const DashboardItemCard = ({
             currentExpandedCard === id ? "bg-[#1e1e1e]" : "bg-[#333]"
           }`}
         >
-          {dashboardDetails?.dashboardItems?.length > 0 ? (
-            dashboardDetails?.dashboardItems?.map((dashboardItem) => (
+          {dashboardDetails?.dashboardItems?.length == 0 ? (
+            <ShimmerGroup count={3} />
+          ) : filtered?.length > 0 ? (
+            filtered?.map((dashboardItem) => (
               <div
                 key={dashboardItem.id}
                 className="flex items-center gap-3 hover:bg-[#222] text-white px-3 py-5 rounded"
@@ -118,7 +158,7 @@ const DashboardItemCard = ({
               </div>
             ))
           ) : (
-            <ShimmerGroup count={3} />
+            "none"
           )}
         </div>
       )}

@@ -4,7 +4,7 @@ import { useState } from "react";
 
 function App() {
   const [currentExpandedCard, setCurrentExpandedCard] = useState("");
-  const [filterBy, setFilterBy] = useState("");
+  const [filterBy, setFilterBy] = useState("all");
 
   return (
     <main className="bg-[#222] w-screen h-screen flex flex-col justify-between">
