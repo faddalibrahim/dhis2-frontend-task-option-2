@@ -8,6 +8,15 @@ import ShimmerGroup from "../Shimmer/ShimmerGroup";
 // functions
 import { getAllDashboards } from "../../utils/functions";
 
+/**
+ * Renders a list of dashboard cards for the dashboard page.
+ *
+ * @param {Object} props - The props object destructured to get the following:
+ *   - setCurrentExpandedCard: A function to set the currently expanded card.
+ *   - currentExpandedCard: The id of currently expanded card.
+ *   - filterBy: The filter used for the dashboards.
+ * @return {JSX.Element} The rendered dashboard card list component.
+ */
 export default function DashboardCardList({
   setCurrentExpandedCard,
   currentExpandedCard,

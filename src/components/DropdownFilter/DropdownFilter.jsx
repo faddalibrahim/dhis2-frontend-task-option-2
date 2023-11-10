@@ -1,5 +1,11 @@
 import { DROPDOWN_FILTER_OPTIONS } from "../../utils/constants";
 
+/**
+ * Renders a dropdown filter component.
+ *
+ * @param {Object} setFilterBy - A function to set the filter value.
+ * @return {JSX.Element} The rendered dropdown filter component.
+ */
 export default function DropdownFilter({ setFilterBy }) {
   const handleFilterOnChange = (event) => {
     setFilterBy(event.target.value.toLowerCase());

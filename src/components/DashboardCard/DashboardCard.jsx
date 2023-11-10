@@ -15,6 +15,18 @@ import {
 // constants
 import { DASHBOARD_ITEM_TYPE_ICON } from "../../utils/constants";
 
+/**
+ * Renders a dashboard item card.
+ *
+ * @param {Object} props - The props for the component.
+ * @param {string} props.displayName - The display name of the dashboard item.
+ * @param {string} props.id - The ID of the dashboard item.
+ * @param {string} props.currentExpandedCard - The ID of the currently expanded card.
+ * @param {function} props.setCurrentExpandedCard - The function to set the ID of the currently expanded card.
+ * @param {string} props.filterBy - The filter option for the dashboard items.
+ * @param {number} props.index - The index of the dashboard item card.
+ * @return {JSX.Element} - The rendered dashboard item card.
+ */
 const DashboardItemCard = ({
   displayName,
   id,
