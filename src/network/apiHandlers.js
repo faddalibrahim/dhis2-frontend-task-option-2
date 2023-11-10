@@ -4,14 +4,6 @@ import {
   SINGLE_DASHBOARD_DETAILS_URL,
 } from "./apiEndPoints";
 
-export function fetchListOfDashboards() {
-  return axiosClient.get(LIST_OF_DASHBOARDS_URL);
-}
-
-export function fetchSingleDashboardDetails(dashboardId) {
-  return axiosClient.get(SINGLE_DASHBOARD_DETAILS_URL(dashboardId));
-}
-
 const apiHandlers = (function () {
   const fetchListOfDashboards = () => {
     return axiosClient.get(LIST_OF_DASHBOARDS_URL);
@@ -26,3 +18,5 @@ const apiHandlers = (function () {
     fetchSingleDashboardDetails,
   };
 })();
+
+export default apiHandlers;
