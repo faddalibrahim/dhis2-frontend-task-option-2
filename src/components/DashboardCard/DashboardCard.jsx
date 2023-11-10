@@ -24,8 +24,8 @@ const DashboardItemCard = ({
   index,
 }) => {
   const [dashboardDetails, setDashboardDetails] = useState(null);
-  const [filtered, setFiltered] = useState(null);
-  const [isStarred, setIsStarred] = useState(
+  const [filteredDashboardItems, setFilteredDashboardItems] = useState(null);
+  const [isAStarredDashboard, setIsAStarredDashboard] = useState(
     getStarredDashboards().includes(id)
   );
 
@@ -41,7 +41,7 @@ const DashboardItemCard = ({
     if (!dashboardDetails) {
       const details = await getSingleDashboardDetails(id);
       setDashboardDetails(details);
-      setFiltered(filterDashboardItems(details));
+      setFilteredDashboardItems(filterDashboardItems(details));
     }
   };
 
@@ -65,7 +65,7 @@ const DashboardItemCard = ({
 
     const STARRED_DASHBOARDS = getStarredDashboards();
 
-    if (isStarred) {
+    if (isAStarredDashboard) {
       const index = STARRED_DASHBOARDS.indexOf(id);
       STARRED_DASHBOARDS.splice(index, 1);
     } else {
@@ -75,7 +75,7 @@ const DashboardItemCard = ({
     updateStarredDashboards(STARRED_DASHBOARDS);
 
     // update starred state
-    setIsStarred(!isStarred);
+    setIsAStarredDashboard(!isAStarredDashboard);
   };
 
   useEffect(() => {
@@ -93,7 +93,7 @@ const DashboardItemCard = ({
 
   useEffect(() => {
     console.log("filtering dashboard in use effect");
-    setFiltered(filterDashboardItems(dashboardDetails));
+    setFilteredDashboardItems(filterDashboardItems(dashboardDetails));
   }, [filterBy, dashboardDetails, filterDashboardItems]);
 
   return (
@@ -105,7 +105,7 @@ const DashboardItemCard = ({
         <h1 className="text-lg text-[#aaa] font-medium">{displayName}</h1>
         <div className="flex items-center gap-4 hover:animate-pulse">
           <div onClick={handleDashboardStar} className="hover:animate-bounce">
-            {isStarred ? <StarYellow /> : <StarGray />}
+            {isAStarredDashboard ? <StarYellow /> : <StarGray />}
           </div>
           <div className={`${currentExpandedCard === id ? "rotate-180" : ""}`}>
             <Caret />
@@ -120,8 +120,8 @@ const DashboardItemCard = ({
         >
           {dashboardDetails?.dashboardItems?.length == 0 ? (
             <ShimmerGroup count={3} />
-          ) : filtered?.length > 0 ? (
-            filtered?.map((dashboardItem) => (
+          ) : filteredDashboardItems?.length > 0 ? (
+            filteredDashboardItems?.map((dashboardItem) => (
               <div
                 key={dashboardItem.id}
                 className="flex items-center gap-3 hover:bg-[#222] text-white px-3 py-5 rounded"
