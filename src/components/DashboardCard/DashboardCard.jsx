@@ -1,5 +1,5 @@
-// librairies import
-import { useEffect, useState } from "react";
+// lib import
+import { useEffect, useState, useCallback } from "react";
 
 // components
 import { Caret, StarGray, StarYellow } from "../../assets/icons/Icons";
@@ -25,10 +25,11 @@ const DashboardItemCard = ({
 }) => {
   const [dashboardDetails, setDashboardDetails] = useState(null);
   const [filtered, setFiltered] = useState(null);
-  // const [isStarred, setIsStarred] = useState(starred);
   const [isStarred, setIsStarred] = useState(
     getStarredDashboards().includes(id)
   );
+
+  console.log("hello", index);
 
   const handleCardExpansionToggle = async () => {
     // toggle dashboard expansion
@@ -40,8 +41,14 @@ const DashboardItemCard = ({
     if (!dashboardDetails) {
       const details = await getSingleDashboardDetails(id);
       setDashboardDetails(details);
-      setFiltered(
-        details?.dashboardItems?.filter((dashboardItem) => {
+      setFiltered(filterDashboardItems(details));
+    }
+  };
+
+  const filterDashboardItems = useCallback(
+    (dashboardData) => {
+      return (
+        dashboardData?.dashboardItems?.filter((dashboardItem) => {
           if (filterBy == "all") {
             return true;
           } else {
@@ -49,8 +56,9 @@ const DashboardItemCard = ({
           }
         }) ?? []
       );
-    }
-  };
+    },
+    [filterBy]
+  );
 
   const handleDashboardStar = async (event) => {
     event.stopPropagation();
@@ -85,18 +93,8 @@ const DashboardItemCard = ({
 
   useEffect(() => {
     console.log("filtering dashboard in use effect");
-    setFiltered(
-      dashboardDetails?.dashboardItems?.filter((dashboardItem) => {
-        if (filterBy == "all") {
-          return true;
-        } else {
-          return dashboardItem.type.toLowerCase() === filterBy.toLowerCase();
-        }
-      }) ?? []
-    );
-  }, [filterBy, dashboardDetails]);
-
-  // console.log(filterBy);
+    setFiltered(filterDashboardItems(dashboardDetails));
+  }, [filterBy, dashboardDetails, filterDashboardItems]);
 
   return (
     <div className="flex flex-col">
