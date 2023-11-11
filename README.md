@@ -4,9 +4,9 @@ DHIS2 Frontend Task Option 2 - Dashboard
 
 ## Tools & Technologies
 
-[React (scaffolded with Vite)](https://vitejs.dev/guide/)
-[Tailwindcss](https://tailwindcss.com/)
-[Cypress (for testing)](https://www.cypress.io/)
+[React ( scaffolded with Vite )](https://vitejs.dev/guide/)  
+[Tailwindcss](https://tailwindcss.com/)  
+[Cypress ( for testing )](https://www.cypress.io/)
 
 ## Live
 
@@ -18,6 +18,4 @@ DHIS2 Frontend Task Option 2 - Dashboard
 
 ## Sneak Peak
 
-## Built meticulously with 🔥 by
-
-Faddal Ibrahim 🚀
+![App Gif](app.gif)
