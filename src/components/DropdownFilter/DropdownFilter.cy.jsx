@@ -1,39 +1,36 @@
 /* eslint-disable no-undef */
 import DropdownFilter from "./DropdownFilter";
 
-describe("<DropdownFilter />", () => {
-  it("renders", () => {
+describe("All 5 select options - all, map, messages, text, visualization - present", () => {
+  it("renders dropdown filter with the expected option values", () => {
     cy.mount(<DropdownFilter />);
+    cy.get("select > option")
+      .should("have.length", 5)
+      .should("contain", "all")
+      .should("contain", "map")
+      .should("contain", "messages")
+      .should("contain", "text")
+      .should("contain", "visualization");
   });
+});
 
-  it("selects all", () => {
+describe("Default value is 'all'", () => {
+  it("renders dropdown filter with default value of 'all'", () => {
     cy.mount(<DropdownFilter />);
-    cy.get("select").select("all");
+    cy.get("select").should("have.value", "all");
   });
+});
 
-  it("selects map", () => {
-    cy.mount(<DropdownFilter setFilterBy={() => null} />);
+describe("Select 'map'", () => {
+  it("should select 'map' and call filterBy with 'map'", () => {
+    const setFilterByStub = cy.stub().as("setFilterByStub");
+
+    cy.mount(<DropdownFilter setFilterBy={setFilterByStub} />);
+
     cy.get("select").select("map");
-  });
 
-  it("selects messages", () => {
-    cy.mount(<DropdownFilter setFilterBy={() => null} />);
-    cy.get("select").select("messages");
-  });
+    cy.get("@setFilterByStub").should("have.been.calledOnceWith", "map");
 
-  it("selects text", () => {
-    cy.mount(<DropdownFilter setFilterBy={() => null} />);
-    cy.get("select").select("text");
+    cy.get("select").should("have.value", "map");
   });
-
-  it("selects visualization", () => {
-    cy.mount(<DropdownFilter setFilterBy={() => null} />);
-    cy.get("select").select("visualization");
-  });
-  // it("clicking + fires a change event with the incremented value", () => {
-  //   const onChangeSpy = cy.spy().as("onChangeSpy");
-  //   cy.mount(<DropdownFilter />);
-  //   cy.get("[data-cy=increment]").click();
-  //   cy.get("@onChangeSpy").should("have.been.calledWith", 1);
-  // });
 });
