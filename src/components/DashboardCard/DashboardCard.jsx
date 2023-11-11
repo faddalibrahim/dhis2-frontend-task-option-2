@@ -104,13 +104,17 @@ const DashboardItemCard = ({
       <div
         className="flex justify-between px-5 py-8 bg-[#333] items-center cursor-pointer"
         onClick={handleCardExpansionToggle}
+        data-cy="dashboard-card"
       >
         <h1 className="text-lg text-[#aaa] font-medium">{displayName}</h1>
         <div className="flex items-center gap-4 hover:animate-pulse">
           <div onClick={handleDashboardStar} className="hover:animate-bounce">
             {starredDashboards.includes(id) ? <StarYellow /> : <StarGray />}
           </div>
-          <div className={`${currentExpandedCard === id ? "rotate-180" : ""}`}>
+          <div
+            data-cy="caret"
+            className={`${currentExpandedCard === id ? "rotate-180" : ""}`}
+          >
             <Caret />
           </div>
         </div>
@@ -120,6 +124,7 @@ const DashboardItemCard = ({
           className={`px-5 py-4 text-[#aaa] flex flex-col cursor-pointer h-[15rem] overflow-y-auto ${
             currentExpandedCard === id ? "bg-[#1e1e1e]" : "bg-[#333]"
           }`}
+          data-cy="dashboard-details"
         >
           {dashboardDetails?.dashboardItems?.length == 0 ? (
             <ShimmerGroup count={3} />
