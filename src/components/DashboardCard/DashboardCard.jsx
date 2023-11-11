@@ -23,6 +23,8 @@ import { DASHBOARD_ITEM_TYPE_ICON } from "../../utils/constants";
  * @param {function} props.setCurrentExpandedCard - The function to set the ID of the currently expanded card.
  * @param {string} props.filterBy - The filter option for the dashboard items.
  * @param {number} props.index - The index of the dashboard item card.
+ * param {Array} props.starredDashboards - The ID list of starred dashboards.
+ * @param {function} props.setStarredDashboards - The function to set the list of starred dashboards.
  * @return {JSX.Element} - The rendered dashboard item card.
  */
 const DashboardItemCard = ({
