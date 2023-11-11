@@ -8,7 +8,6 @@ import apiHandlers from "./../network/apiHandlers";
 export const getAllDashboards = async () => {
   try {
     const DASHBOARD_LIST_RESPONSE = await apiHandlers.fetchListOfDashboards();
-    console.log(DASHBOARD_LIST_RESPONSE);
 
     if (DASHBOARD_LIST_RESPONSE.status === 200) {
       return DASHBOARD_LIST_RESPONSE.data.dashboards;
@@ -16,7 +15,7 @@ export const getAllDashboards = async () => {
 
     return [];
   } catch (error) {
-    console.log(error);
+    return [];
   }
 };
 
@@ -37,7 +36,7 @@ export const getSingleDashboardDetails = async (dashboardId) => {
 
     return {};
   } catch (error) {
-    console.log(error);
+    return {};
   }
 };
 

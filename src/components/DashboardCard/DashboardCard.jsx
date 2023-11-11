@@ -82,7 +82,6 @@ const DashboardItemCard = ({
   };
 
   useEffect(() => {
-    console.log("loading first dashboard data");
     // get first dashboard card's details on load
     if (index === 0) {
       (async () => {
@@ -95,7 +94,6 @@ const DashboardItemCard = ({
   }, [index, setCurrentExpandedCard, id]);
 
   useEffect(() => {
-    console.log("filtering dashboard in use effect");
     setFilteredDashboardItems(filterDashboardItems(dashboardDetails));
   }, [filterBy, dashboardDetails, filterDashboardItems]);
 
@@ -107,8 +105,14 @@ const DashboardItemCard = ({
         data-cy="dashboard-card"
       >
         <h1 className="text-lg text-[#aaa] font-medium">{displayName}</h1>
-        <div className="flex items-center gap-4 hover:animate-pulse">
-          <div onClick={handleDashboardStar} className="hover:animate-bounce">
+        <div className="flex items-center gap-4">
+          <div
+            onClick={handleDashboardStar}
+            className={`hover:bg-[#222] p-4 rounded-full hover:animate-pulse transition-colors duration cursor-pointer ${
+              starredDashboards.includes(id) ? "starred" : "not-starred"
+            }`}
+            data-cy="star-icon"
+          >
             {starredDashboards.includes(id) ? <StarYellow /> : <StarGray />}
           </div>
           <div
@@ -131,6 +135,7 @@ const DashboardItemCard = ({
           ) : filteredDashboardItems?.length > 0 ? (
             filteredDashboardItems?.map((dashboardItem) => (
               <div
+                data-cy={dashboardItem.type.toLowerCase()}
                 key={dashboardItem.id}
                 className="flex items-center gap-3 hover:bg-[#222] text-white px-3 py-5 rounded"
               >

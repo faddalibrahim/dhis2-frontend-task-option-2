@@ -13,6 +13,7 @@ export default function DropdownFilter({ setFilterBy }) {
 
   return (
     <select
+      data-cy="dropdown-filter"
       id="dropdown-filter"
       onChange={handleFilterOnChange}
       className="outline-none border-none py-4 px-3 rounded text-white bg-[#333] hover:bg-[#444] transition-colors duration cursor-pointer"
