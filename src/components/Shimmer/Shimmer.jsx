@@ -6,7 +6,7 @@ import ShimmerStyles from "./shimmer.module.css";
  * @return {JSX.Element} A div element the Shimmer effect.
  */
 const Shimmer = () => {
-  return <div className={ShimmerStyles.shimmer}></div>;
+  return <div data-type="shimmer" className={ShimmerStyles.shimmer}></div>;
 };
 
 export default Shimmer;

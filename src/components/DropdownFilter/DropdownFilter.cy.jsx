@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 import DropdownFilter from "./DropdownFilter";
 
 describe("<DropdownFilter />", () => {

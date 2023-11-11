@@ -41,8 +41,6 @@ const DashboardItemCard = ({
     getStarredDashboards().includes(id)
   );
 
-  console.log("hello", index);
-
   const handleCardExpansionToggle = async () => {
     // toggle dashboard expansion
     currentExpandedCard === id
@@ -139,7 +137,7 @@ const DashboardItemCard = ({
                 className="flex items-center gap-3 hover:bg-[#222] text-white px-3 py-5 rounded"
               >
                 {DASHBOARD_ITEM_TYPE_ICON[dashboardItem.type]}
-                <p>
+                <p data-type={dashboardItem.type}>
                   {dashboardItem.text ??
                     dashboardItem[dashboardItem.type.toLowerCase()].name ??
                     "Messages"}
@@ -147,7 +145,7 @@ const DashboardItemCard = ({
               </div>
             ))
           ) : (
-            "none"
+            "no items match the current filter"
           )}
         </div>
       )}

@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 describe("Expand Cases Malaria Dashboard", () => {
   it("expands Cases Malaria card", () => {
     cy.visit("http://localhost:5173");

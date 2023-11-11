@@ -1,9 +1,8 @@
-import React from "react";
 import Shimmer from "./Shimmer";
 
 describe("<Shimmer />", () => {
-  it("renders a Shimmer", () => {
-    // see: https://on.cypress.io/mounting-react
+  it("should render a single Shimmer", () => {
     cy.mount(<Shimmer />);
+    cy.get('[data-type="shimmer"]').should("have.length", 1);
   });
 });
