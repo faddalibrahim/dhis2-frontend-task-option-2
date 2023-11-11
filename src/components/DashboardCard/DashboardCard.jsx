@@ -8,7 +8,6 @@ import ShimmerGroup from "../Shimmer/ShimmerGroup";
 // functions
 import {
   getSingleDashboardDetails,
-  getStarredDashboards,
   updateStarredDashboards,
 } from "../../utils/functions";
 
@@ -18,7 +17,6 @@ import { DASHBOARD_ITEM_TYPE_ICON } from "../../utils/constants";
 /**
  * Renders a dashboard item card.
  *
- * @param {Object} props - The props for the component.
  * @param {string} props.displayName - The display name of the dashboard item.
  * @param {string} props.id - The ID of the dashboard item.
  * @param {string} props.currentExpandedCard - The ID of the currently expanded card.
@@ -34,13 +32,11 @@ const DashboardItemCard = ({
   setCurrentExpandedCard,
   filterBy,
   index,
+  starredDashboards,
+  setStarredDashboards,
 }) => {
   const [dashboardDetails, setDashboardDetails] = useState(null);
   const [filteredDashboardItems, setFilteredDashboardItems] = useState(null);
-  const [isAStarredDashboard, setIsAStarredDashboard] = useState(
-    getStarredDashboards().includes(id)
-  );
-
   const handleCardExpansionToggle = async () => {
     // toggle dashboard expansion
     currentExpandedCard === id
@@ -73,19 +69,16 @@ const DashboardItemCard = ({
   const handleDashboardStar = async (event) => {
     event.stopPropagation();
 
-    const STARRED_DASHBOARDS = getStarredDashboards();
-
-    if (isAStarredDashboard) {
-      const index = STARRED_DASHBOARDS.indexOf(id);
-      STARRED_DASHBOARDS.splice(index, 1);
+    if (starredDashboards.includes(id)) {
+      setStarredDashboards(
+        starredDashboards.filter((dashboardId) => dashboardId !== id)
+      );
     } else {
-      STARRED_DASHBOARDS.push(id);
+      starredDashboards.push(id);
+      setStarredDashboards([...starredDashboards, id]);
     }
 
-    updateStarredDashboards(STARRED_DASHBOARDS);
-
-    // update starred state
-    setIsAStarredDashboard(!isAStarredDashboard);
+    updateStarredDashboards(starredDashboards);
   };
 
   useEffect(() => {
@@ -115,7 +108,7 @@ const DashboardItemCard = ({
         <h1 className="text-lg text-[#aaa] font-medium">{displayName}</h1>
         <div className="flex items-center gap-4 hover:animate-pulse">
           <div onClick={handleDashboardStar} className="hover:animate-bounce">
-            {isAStarredDashboard ? <StarYellow /> : <StarGray />}
+            {starredDashboards.includes(id) ? <StarYellow /> : <StarGray />}
           </div>
           <div className={`${currentExpandedCard === id ? "rotate-180" : ""}`}>
             <Caret />

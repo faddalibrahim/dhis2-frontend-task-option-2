@@ -6,7 +6,7 @@ import DashboardCard from "../DashboardCard/DashboardCard";
 import ShimmerGroup from "../Shimmer/ShimmerGroup";
 
 // functions
-import { getAllDashboards } from "../../utils/functions";
+import { getAllDashboards, getStarredDashboards } from "../../utils/functions";
 
 /**
  * Renders a list of dashboard cards for the dashboard page.
@@ -23,6 +23,9 @@ export default function DashboardCardList({
   filterBy,
 }) {
   const [dashboards, setDashboards] = useState([]);
+  const [starredDashboards, setStarredDashboards] = useState(
+    getStarredDashboards()
+  );
 
   useEffect(() => {
     (async () => {
@@ -44,6 +47,8 @@ export default function DashboardCardList({
               setCurrentExpandedCard={setCurrentExpandedCard}
               filterBy={filterBy}
               index={index}
+              starredDashboards={starredDashboards}
+              setStarredDashboards={setStarredDashboards}
             />
           ))
         ) : (
